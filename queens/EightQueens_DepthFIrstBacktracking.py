@@ -88,5 +88,4 @@ def print_board(board):
 
 
 boards = solve_eight_queens()
-print()
 print(configurations, "configurations")
