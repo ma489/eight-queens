@@ -1,4 +1,4 @@
-# Eight Queens - Iterative repair
+# Eight Queens - Iterative repair with min-conflicts heuristic (hill-climbing)
 # Unlike DF Backtracking approach, this does not guarantee a solution, as it may get stuck in a local optimum
 #   -> in which case, restart with a different initial configuration
 #   -> However, this heuristic-based approach does often solve the big cases quickly
