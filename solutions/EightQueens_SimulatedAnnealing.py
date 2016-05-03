@@ -74,7 +74,7 @@ class EightQueensSolver:
                 return (False, t)
             temperature = starting_temperature - cooling_factor
             if temperature == 0:
-                return (False, t)
+                return False, t
             current_value = self.evaluate()
             random_queen, old_pos, new_pos = self.try_new_configuration()
             new_value = self.evaluate()
@@ -103,8 +103,8 @@ class EightQueensSolver:
 # solver = EightQueensSolver(5) ✓
 # solver = EightQueensSolver(6) ✓
 # solver = EightQueensSolver(7) ✓
-solver = EightQueensSolver(8) # !
-solved, iterations = solver.solve(timeout=10000000, starting_temperature=35, cooling_factor=0.05)
+solver = EightQueensSolver(8) # ! Found a solution in 6,920,787 iterations
+solved, iterations = solver.solve(timeout=100000000, starting_temperature=35, cooling_factor=0.05)
 if solved:
     print("Found a solution in", iterations, "iterations.")
     print("Queen positions:", solver.queen_positions)
