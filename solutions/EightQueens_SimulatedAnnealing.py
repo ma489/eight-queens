@@ -71,11 +71,12 @@ class EightQueensSolver:
 
     def solve(self, timeout, starting_temperature, cooling_factor):
         t = 0
+        temperature = starting_temperature
         while not self.is_solution():
             self.progress(t, timeout)
             if t == timeout:
                 return (False, t)
-            temperature = starting_temperature - cooling_factor
+            temperature = temperature - cooling_factor #stabilizing factor?
             if temperature == 0:
                 return False, t
             current_value = self.evaluate()
@@ -107,7 +108,7 @@ class EightQueensSolver:
 # solver = EightQueensSolver(6) ✓
 # solver = EightQueensSolver(7) ✓
 solver = EightQueensSolver(8) # ! Found a solution in 6,920,787 iterations
-solved, iterations = solver.solve(timeout=100000000, starting_temperature=35, cooling_factor=0.05)
+solved, iterations = solver.solve(timeout=100000000, starting_temperature=35000, cooling_factor=0.05)
 if solved:
     print("Found a solution in", iterations, "iterations.")
     print("Queen positions:", solver.queen_positions)
