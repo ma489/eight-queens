@@ -16,7 +16,6 @@ class EightQueensSolver:
         self.board = [[0 for count in range(self.n)] for count in range(self.n)]
         for queen_pos in self.queen_positions.values():
             self.calculate_conflicts(queen_pos, operand=1)
-        # print("Initial board", self.board)
         print("Initial queen positions", self.queen_positions)
 
     def calculate_conflicts(self, queen_pos, operand):
@@ -94,8 +93,6 @@ solved, iterations = solver.solve(timeout=100000)
 if solved:
     print("Found a solution in", iterations, "iterations.")
     print("Queen positions:", solver.queen_positions)
-    # print("Board:", solver.board)
 else:
     print("Failed to solve. 'Timed out' after", iterations, "iterations")
     print("Board with last conflict counts:", solver.board)
-    # print("Queens", solver.queen_positions)
