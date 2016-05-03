@@ -64,6 +64,9 @@ class EightQueensSolver:
         return random_queen, old_pos, new_pos
 
     def revert_state(self, random_queen, old_pos, new_pos):
+        self.calculate_conflicts(new_pos, -1)
+        self.queen_positions.update({random_queen: old_pos})
+        self.calculate_conflicts(old_pos, 1)
         pass
 
     def solve(self, timeout, starting_temperature, cooling_factor):
