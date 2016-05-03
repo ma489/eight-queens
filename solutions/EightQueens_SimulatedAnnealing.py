@@ -73,42 +73,27 @@ class EightQueensSolver:
         t = 0
         temperature = starting_temperature
         while not self.is_solution():
-            self.progress(t, timeout)
             if t == timeout:
                 return (False, t)
-            temperature = temperature - cooling_factor #stabilizing factor?
-            if temperature == 0:
+            temperature *= 1 - cooling_factor
+            if temperature <= 0:
                 return False, t
-            current_value = self.evaluate()
-            random_queen, old_pos, new_pos = self.try_new_configuration()
-            new_value = self.evaluate()
-            delta = new_value - current_value
-            probability = math.exp(-delta / temperature)
-            acceptable_solution = (delta < 0) or (probability > random())
-            if not acceptable_solution:
-                self.revert_state(random_queen, old_pos, new_pos)
+            i = 1
+            while i <= 100: # try at this temperature multiple times
+                current_value = self.evaluate()
+                random_queen, old_pos, new_pos = self.try_new_configuration()
+                new_value = self.evaluate()
+                delta = new_value - current_value
+                acceptable_solution = (delta < 0) or (math.exp(-delta / temperature) > random())
+                if not acceptable_solution:
+                    self.revert_state(random_queen, old_pos, new_pos)
+                i += 1
             t += 1
         return True, t
 
-    def progress(self, t, timeout):
-        if t == timeout / 20:
-            print("5%")
-        elif t == timeout / 10:
-            print("10%")
-        elif t == timeout/4:
-            print("25%")
-        elif t == timeout / 2:
-            print("50%")
-        elif t == (timeout / 4)*3:
-            print("75%")
 
-
-# solver = EightQueensSolver(4) ✓
-# solver = EightQueensSolver(5) ✓
-# solver = EightQueensSolver(6) ✓
-# solver = EightQueensSolver(7) ✓
-solver = EightQueensSolver(8) # ! Found a solution in 6,920,787 iterations
-solved, iterations = solver.solve(timeout=100000000, starting_temperature=35000, cooling_factor=0.05)
+solver = EightQueensSolver(8)
+solved, iterations = solver.solve(timeout=10000, starting_temperature=1, cooling_factor=0.9)
 if solved:
     print("Found a solution in", iterations, "iterations.")
     print("Queen positions:", solver.queen_positions)
